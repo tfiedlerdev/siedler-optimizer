@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project to find optimal settling positions in the game Settlers of Catan.
 ![Screenshot of app](example_image.png)
+The numbers display the expected amount of resources per move.
 
 ## Getting Started
 
