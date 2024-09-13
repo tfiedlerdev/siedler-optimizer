@@ -50,7 +50,8 @@ function ResourceExpectancy({
       .filter((n) => n != null)
       .forEach((n: TileData) => {
         const { type, diceNumber } = n;
-        if (diceNumber == "hide" || diceNumber == null) return;
+        if (diceNumber == "hide" || diceNumber == null || type === "desert")
+          return;
         combinations.set(
           type,
           (combinations.get(type) ?? 0) + getNumCombinations(diceNumber),
