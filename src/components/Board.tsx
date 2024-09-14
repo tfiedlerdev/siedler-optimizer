@@ -25,7 +25,13 @@ interface TileGraphNode {
 
 const randomInit = false;
 const resourceTypes: TileType[] = ["wood", "stone", "sheep", "clay"];
-export function Board({}: object) {
+export function Board({
+  onStateChanged,
+  initialState,
+}: {
+  onStateChanged: (state: TileData[][]) => void;
+  initialState: TileData[][];
+}) {
   const tileHeight = useMemo(() => getTileHeight(tileWidth), []);
   const tileCornerY = useMemo(() => getTileCornerY(tileHeight), [tileHeight]);
 
@@ -39,20 +45,26 @@ export function Board({}: object) {
   }, []);
 
   const [tileGrid, setTileGrid] = useState(
-    rowWidths.map(
-      (w) =>
-        Array(w)
-          .fill(0)
-          .map(() => ({
-            type: randomInit
-              ? resourceTypes[Math.floor(Math.random() * resourceTypes.length)]
-              : "blank",
-            diceNumber: randomInit
-              ? 2 + Math.floor(Math.random() * 10.5)
-              : undefined,
-          })) as TileData[],
-    ),
+    initialState.length === 0
+      ? rowWidths.map(
+          (w) =>
+            Array(w)
+              .fill(0)
+              .map(() => ({
+                type: randomInit
+                  ? resourceTypes[
+                      Math.floor(Math.random() * resourceTypes.length)
+                    ]
+                  : "blank",
+                diceNumber: randomInit
+                  ? 2 + Math.floor(Math.random() * 10.5)
+                  : undefined,
+              })) as TileData[],
+        )
+      : initialState,
   );
+  useEffect(() => onStateChanged(tileGrid), [tileGrid, onStateChanged]);
+
   const [tileFocused, setTileFocused] = useState({ row: -1, col: -1 });
   useEffect(() => {
     const getNextTile = (row: number, col: number) => {
