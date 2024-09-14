@@ -2,6 +2,16 @@
   "name": "siedler-optimizer",
   "version": "0.1.0",
   "private": true,
+  "eslintConfig": {
+    "rules": {
+      "no-unused-vars": [
+        "warn",
+        {
+          "args": "none"
+        }
+      ]
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

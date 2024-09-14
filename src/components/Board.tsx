@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { TileData, TileRow, types } from "./TileRow";
+import { TileData, TileRow } from "./TileRow";
 import { getTileCornerY, getTileHeight } from "@/lib/tile_util";
 import { TileType } from "./Tile";
 import { NodeExpactancy } from "./NodeExpectancy";
@@ -23,7 +23,9 @@ interface TileGraphNode {
   data: TileData;
 }
 
-export function Board({}: {}) {
+const randomInit = false;
+const resourceTypes: TileType[] = ["wood", "stone", "sheep", "clay"];
+export function Board({}: object) {
   const tileHeight = useMemo(() => getTileHeight(tileWidth), []);
   const tileCornerY = useMemo(() => getTileCornerY(tileHeight), [tileHeight]);
 
@@ -41,7 +43,14 @@ export function Board({}: {}) {
       (w) =>
         Array(w)
           .fill(0)
-          .map(() => ({ type: "blank" })) as TileData[],
+          .map(() => ({
+            type: randomInit
+              ? resourceTypes[Math.floor(Math.random() * resourceTypes.length)]
+              : "blank",
+            diceNumber: randomInit
+              ? 2 + Math.floor(Math.random() * 10.5)
+              : undefined,
+          })) as TileData[],
     ),
   );
   const [tileFocused, setTileFocused] = useState({ row: -1, col: -1 });
@@ -95,10 +104,11 @@ export function Board({}: {}) {
     return function cleanup() {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [tileFocused, rowWidths]);
-  const findNode = (gridRow: number, gridCol: number) =>
-    tileGrid[gridRow]?.[gridCol];
+  }, [tileFocused, rowWidths, tileGrid]);
+
   const graph = useMemo(() => {
+    const findNode = (gridRow: number, gridCol: number) =>
+      tileGrid[gridRow]?.[gridCol];
     return tileGrid.map((row, rowIdx) => {
       const belowMiddleCeil = rowIdx > tileGrid.length / 2;
       const belowMiddleFloor = rowIdx >= Math.floor(tileGrid.length / 2);

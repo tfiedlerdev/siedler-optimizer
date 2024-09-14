@@ -2,13 +2,12 @@ import { getTileCornerY, getTileHeight } from "@/lib/tile_util";
 import { TileType } from "./Tile";
 import { TileData, TileRow } from "./TileRow";
 
-const minWidth = 2;
 const maxWidth = 3;
 
 const rows: TileData[][] = [
   [
-    { type: "wood", diceNumber: "hide" },
     { type: "stone", diceNumber: "hide" },
+    { type: "wood", diceNumber: "hide" },
   ],
   [
     { type: "sheep", diceNumber: "hide" },

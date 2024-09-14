@@ -1,14 +1,4 @@
-import { useMemo } from "react";
 import { Tile, TileType } from "./Tile";
-
-export const types: TileType[] = [
-  "wood",
-  "stone",
-  "sheep",
-  "clay",
-  "desert",
-  "blank",
-];
 
 export type TileData = { type: TileType; diceNumber?: number | "hide" };
 

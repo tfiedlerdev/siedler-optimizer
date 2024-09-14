@@ -1,14 +1,6 @@
 import Image from "next/image";
 import { TileSelect } from "./TileSelect";
 import { getNumCombinations, getTileHeight } from "@/lib/tile_util";
-import {
-  createRef,
-  Ref,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
 import { Tooltip } from "@mui/material";
 
 export type TileType =
@@ -30,7 +22,6 @@ export function Tile({
   onClick,
   isDiceNumberFocused,
   onDiceNumberFocusRequested,
-  onDiceNumberChanged,
 }: {
   type: TileType;
   diceNumber?: number | "hide";
